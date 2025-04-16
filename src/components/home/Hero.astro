@@ -1,0 +1,72 @@
+---
+import { MoveRight } from "@lucide/astro";
+---
+
+<section class="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
+    <!-- Imagen de fondo -->
+    <picture class="absolute inset-0 -z-10">
+        <img
+            src="/home/hero.webp"
+            alt="hero"
+            class="w-full h-full object-cover"
+            loading="lazy"
+        />
+    </picture>
+
+    <!-- Contenido -->
+    <div
+        class="flex flex-col items-center justify-center text-center text-white gap-4 px-4 animate-fadeIn"
+    >
+        <h1 class="text-4xl md:text-6xl font-bold animate-slideDown">
+            Bienvenidos a Sabor Crillo
+        </h1>
+        <p class="text-lg md:text-xl animate-slideUp">
+            Sabores que son parte de nuestra historia
+        </p>
+        <a
+            href="#"
+            class="mt-2 w-40 px-4 py-2 bg-primary text-black rounded-2xl shadow-md flex items-center justify-around hover:scale-105 transition-transform duration-300"
+        >
+            <span>Ver menú</span>
+            <MoveRight class="w-5 h-5 animate-pulse" />
+        </a>
+    </div>
+</section>
+
+<style>
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+    
+    @keyframes slideDown {
+        0% { transform: translateY(-20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+        0% { transform: translateY(20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    
+    .animate-fadeIn {
+        animation: fadeIn 1.5s ease-in-out;
+    }
+    
+    .animate-slideDown {
+        animation: slideDown 1s ease-out 0.5s both;
+    }
+    
+    .animate-slideUp {
+        animation: slideUp 1s ease-out 1s both;
+    }
+    
+    .animate-pulse {
+        animation: pulse 3s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(5px); }
+    }
+</style>

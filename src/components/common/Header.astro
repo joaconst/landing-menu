@@ -1,0 +1,194 @@
+---
+import { House, Menu } from "@lucide/astro";
+---
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+    const sectionContent = document.getElementById("section-content");
+    const links = document.querySelectorAll("[data-section]");
+    const mobileOrderButton = document.getElementById("mobile-order-button");
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-side-menu");
+    const closeMenu = document.getElementById("close-menu");
+
+    // Guardamos el contenido inicial
+    const originalHomeContent = sectionContent.innerHTML;
+
+    const loadSection = async (section) => {
+        if (section === "home") {
+            sectionContent.innerHTML = originalHomeContent;
+            mobileOrderButton.classList.add("hidden");
+        } else {
+            try {
+                const res = await fetch(`/partials/${section}.html`);
+                const html = await res.text();
+                sectionContent.innerHTML = html;
+                mobileOrderButton.classList.remove("hidden");
+            } catch (error) {
+                sectionContent.innerHTML = "Error al cargar el contenido.";
+                console.error(error);
+            }
+        }
+    };
+
+    const initialSection = document.querySelector("[data-section].scale-105")
+        ? document.querySelector("[data-section].scale-105").getAttribute("data-section")
+        : "home";
+
+    if (initialSection === "home") {
+        mobileOrderButton.classList.add("hidden");
+    }
+
+    links.forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            links.forEach((l) =>
+                l.classList.remove("scale-105", "border", "rounded-2xl", "border-black")
+            );
+
+            link.classList.add("scale-105", "border", "rounded-2xl", "border-black");
+
+            const section = link.getAttribute("data-section");
+            loadSection(section);
+        });
+    });
+
+    // Abrir menú móvil
+    menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.remove("translate-x-full");
+    });
+
+    // Cerrar menú móvil
+    closeMenu.addEventListener("click", () => {
+        mobileMenu.classList.add("translate-x-full");
+    });
+
+    // Cerrar menú móvil al hacer clic en un link
+    mobileMenu.querySelectorAll("a[data-section]").forEach((link) => {
+        link.addEventListener("click", () => {
+            mobileMenu.classList.add("translate-x-full");
+        });
+    });
+
+    // Cerrar menú móvil al hacer clic fuera del menú
+    document.addEventListener("click", (event) => {
+        // Verificar si el menú está abierto (no tiene la clase translate-x-full)
+        const isMenuOpen = !mobileMenu.classList.contains("translate-x-full");
+        
+        // Verificar si el clic fue fuera del menú y no en el botón de abrir menú
+        const clickedOutside = !mobileMenu.contains(event.target) && !menuToggle.contains(event.target);
+        
+        // Si el menú está abierto y se hizo clic fuera, cerrarlo
+        if (isMenuOpen && clickedOutside) {
+            mobileMenu.classList.add("translate-x-full");
+        }
+    });
+});
+</script>
+
+<header class="flex flex-col md:flex-row items-center justify-between md:justify-center mt-12 md:mt-12 md:h-auto px-8">
+    <div class="flex flex-col md:flex-row justify-center items-center text-center space-y-4 md:space-y-0 md:space-x-4">
+        <!-- Menú -->
+        <div class="flex items-center bg-primary rounded-2xl shadow-md">
+            <!-- Icono -->
+            <button
+                data-section="home"
+                class="flex items-center justify-center w-12 h-12 transition transform duration-200"
+            >
+                <House class="w-6 h-6" />
+            </button>
+
+            <!-- Enlaces desktop -->
+            <nav class="hidden xs:flex space-x-4 px-4">
+                <a href="#" data-section="principales" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Principales</a>
+                <a href="#" data-section="empanadas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Empanadas</a>
+                <a href="#" data-section="tartas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Tartas</a>
+                <a href="#" data-section="bebida" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Bebida</a>
+            </nav>
+
+            <!-- Botón hamburguesa -->
+            <button id="menu-toggle" class="xs:hidden flex items-center gap-1 justify-center w-auto h-10 px-3 transition transform duration-200">
+                <span class="font-medium">MENÚ</span>
+                <Menu class="w-5 h-5" />
+            </button>
+        </div>
+    </div>
+    <!-- Botón pedido (desktop) -->
+    <button class="hidden md:block px-4 py-2 border border-gray-300 rounded-2xl shadow-md bg-white text-black font-semibold md:mt-0 mt-4 md:ml-4">
+        Tu pedido
+    </button>
+</header>
+
+<!-- Contenido dinámico -->
+<section id="section-content" class="mt-8 pb-24">
+    <h2 class="text-2xl font-medium text-center px-4">
+        Gracias por elegirnos
+        <br />
+        Acá vas a encontrar todo sobre nosotros. Elegí, pedí y disfrutá
+    </h2>
+
+    <section class="flex flex-col md:flex-row items-center justify-center gap-4 mt-8 px-8">
+        <!-- Artículo 1 -->
+        <article class="w-80 max-w-full h-62 border rounded-xl shadow-md bg-white text-center space-y-4">
+            <header>
+                <h3 class="bg-secondary py-3 text-white text-xl font-semibold rounded-xl">Medios de pago</h3>
+            </header>
+            <ul class="text-left list-disc pl-6 space-y-2 text-xl font-medium">
+                <li class="py-1">Efectivo</li>
+                <li class="py-1">Tarjeta de crédito</li>
+                <li class="py-1">Tarjeta de débito</li>
+                <li class="py-1">Transferencia bancaria</li>
+            </ul>
+        </article>
+
+        <!-- Artículo 2 -->
+        <article class="w-80 max-w-full h-62 border rounded-xl shadow-md bg-white text-center space-y-4">
+            <header>
+                <h3 class="bg-secondary py-3 text-white text-xl font-semibold rounded-xl">Horarios</h3>
+            </header>
+            <ul class="text-center space-y-2 text-xl font-medium">
+                <li class="py-1">De lunes a sábados</li>
+                <li class="py-1">11:30 a 15:00</li>
+                <li class="py-1">19:00 a 00:00</li>
+            </ul>
+        </article>
+
+        <!-- Artículo 3 -->
+        <article class="w-80 max-w-full h-62 border rounded-xl shadow-md bg-white flex flex-col text-center space-y-4">
+            <header>
+                <h3 class="bg-secondary py-3 text-white text-xl font-semibold rounded-xl">Ubicación</h3>
+            </header>
+            <ul class="text-center space-y-2 text-xl font-medium">
+                <li class="py-1">Av. alguna 123</li>
+                <li class="py-1">Calle alguna 123</li>
+            </ul>
+            <a href="https://www.google.com/maps" target="_blank" class="mt-auto mb-2 font-semibold text-sm">
+                Ver en Maps
+            </a>
+        </article>
+    </section>
+</section>
+
+<!-- Botón pedido móvil -->
+<div id="mobile-order-button" class="fixed bottom-8 w-full px-8 md:hidden">
+    <button class="py-2 border border-gray-300 rounded-xl shadow-md bg-white text-black font-semibold w-full">
+        Tu pedido
+    </button>
+</div>
+
+<!-- Panel lateral móvil -->
+<div
+    id="mobile-side-menu"
+    class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 md:hidden"
+>
+    <div class="flex justify-end p-4">
+        <button id="close-menu" class="text-black font-bold text-xl">&times;</button>
+    </div>
+    <nav class="flex flex-col space-y-4 px-6">
+        <a href="#" data-section="principales" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Principales</a>
+        <a href="#" data-section="empanadas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Empanadas</a>
+        <a href="#" data-section="tartas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Tartas</a>
+        <a href="#" data-section="bebida" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Bebida</a>
+    </nav>
+</div>
