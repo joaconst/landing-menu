@@ -2,16 +2,20 @@
 import { MoveRight } from "@lucide/astro";
 ---
 
-<section class="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
+<section class="relative w-full h-[85vh] overflow-hidden flex items-center justify-center">
     <!-- Imagen de fondo -->
-    <picture class="absolute inset-0 -z-10">
-        <img
-            src="/home/hero.webp"
-            alt="hero"
-            class="w-full h-full object-cover"
-            loading="lazy"
-        />
-    </picture>
+<picture class="absolute inset-0 -z-10">
+    <img
+        src="/home/hero.webp"
+        alt="hero"
+        class="w-full h-full object-cover"
+        loading="lazy"
+    />
+</picture>
+
+<!-- Capa negra sobre la imagen -->
+<div class="absolute inset-0 bg-black opacity-60 -z-10"></div>
+
 
     <!-- Contenido -->
     <div
