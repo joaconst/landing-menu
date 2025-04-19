@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "title": "Empanadas árabes",
+    "ingredients": "Carne, cebolla, tomate, limón, especias",
+    "price": 1500,
+    "img": "/home/empanadas/empanadas-arabes.webp"
+  },
+  {
+    "id": 2,
+    "title": "Empanadas de jamon y queso",
+    "ingredients": "Jamon y queso",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-jamon.webp"
+  },
+  {
+    "id": 3,
+    "title": "Empanadas Dulces",
+    "ingredients": "Carne picada, cebolla, huevo",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-dulces.webp"
+  },
+  {
+    "id": 4,
+    "title": "Empanadas Picantes",
+    "ingredients": "Carne picada, cebolla, huevo",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-picantes.webp"
+  },
+  {
+    "id": 5,
+    "title": "Empanadas de pollo",
+    "ingredients": "Carne picada, cebolla, huevo",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-pollo.webp"
+  },
+  {
+    "id": 6,
+    "title": "Empanadas de choclo",
+    "ingredients": "Carne picada, cebolla, huevo",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-choclo.webp"
+  },
+  {
+    "id": 7,
+    "title": "Empanadas de cerdo",
+    "ingredients": "Carne picada, cebolla, huevo",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-cerdo.webp"
+  },
+  {
+    "id": 8,
+    "title": "Empanadas cortadas a cuchillo",
+    "ingredients": "Carne picada, cebolla, huevo",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-cuchillo.webp"
+  },
+  {
+    "id": 9,
+    "title": "Empanadas de acelga",
+    "ingredients": "Carne picada, cebolla, huevo",
+    "price": 1600,
+    "img": "/home/empanadas/empanadas-acelga.webp"
+  }
+]
