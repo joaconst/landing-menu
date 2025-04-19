@@ -1,9 +1,235 @@
 ---
-import { House, Menu } from "@lucide/astro";
+import { House, Menu, Minus, Plus } from "@lucide/astro";
 ---
 
+<header
+  class="flex flex-col md:flex-row items-center justify-between md:justify-center mt-12 px-8"
+>
+  <div
+    class="flex flex-col md:flex-row justify-center items-center text-center space-y-4 md:space-y-0 md:space-x-4"
+  >
+    <!-- Menú -->
+    <div class="flex items-center bg-primary rounded-2xl shadow-md">
+      <!-- Icono -->
+      <button
+        data-section="home"
+        class="flex items-center justify-center w-12 h-12 transition transform duration-200"
+      >
+        <House class="w-6 h-6" />
+      </button>
+
+      <!-- Enlaces desktop -->
+      <nav class="hidden xs:flex space-x-4 px-4">
+        <a
+          href="#"
+          data-section="principales"
+          class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+          >Principales</a
+        >
+        <a
+          href="#"
+          data-section="empanadas"
+          class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+          >Empanadas</a
+        >
+        <a
+          href="#"
+          data-section="tartas"
+          class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+          >Tartas</a
+        >
+        <a
+          href="#"
+          data-section="bebida"
+          class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+          >Bebida</a
+        >
+      </nav>
+
+      <!-- Botón hamburguesa -->
+      <button
+        id="menu-toggle"
+        class="xs:hidden flex items-center gap-1 justify-center w-auto h-10 px-3 transition transform duration-200"
+      >
+        <span class="font-medium">MENÚ</span>
+        <Menu class="w-5 h-5" />
+      </button>
+    </div>
+  </div>
+  <!-- Botón pedido (desktop) -->
+  <button
+    id="desktop-order-button"
+    class="hidden md:block px-4 py-2 border border-gray-300 rounded-2xl shadow-md bg-white text-black font-semibold md:mt-0 mt-4 md:ml-4"
+  >
+    Tu pedido
+  </button>
+</header>
+
+<!-- Contenido dinámico -->
+<section id="section-content" class="mt-8 pb-24">
+  <h2 class="text-2xl font-medium text-center px-4">
+    Gracias por elegirnos<br />Acá vas a encontrar todo sobre nosotros. Elegí,
+    pedí y disfrutá
+  </h2>
+</section>
+
+<!-- Botón pedido móvil -->
+<div id="mobile-order-button" class="fixed bottom-8 w-full px-8 md:hidden">
+  <button
+    class="py-2 border border-gray-300 rounded-xl shadow-md bg-white text-black font-semibold w-full"
+  >
+    Tu pedido
+  </button>
+</div>
+
+<!-- Panel lateral móvil -->
+<div
+  id="mobile-side-menu"
+  class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 md:hidden"
+>
+  <div class="flex justify-end p-4">
+    <button id="close-menu" class="text-black font-bold text-xl">&times;</button
+    >
+  </div>
+  <nav class="flex flex-col space-y-4 px-6">
+    <a
+      href="#"
+      data-section="principales"
+      class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+      >Principales</a
+    >
+    <a
+      href="#"
+      data-section="empanadas"
+      class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+      >Empanadas</a
+    >
+    <a
+      href="#"
+      data-section="tartas"
+      class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+      >Tartas</a
+    >
+    <a
+      href="#"
+      data-section="bebida"
+      class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1"
+      >Bebida</a
+    >
+  </nav>
+</div>
+
+<!-- Modal de "Ver mas" -->
+<div
+  id="product-modal"
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden p-8"
+>
+  <div class="relative bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
+    <button
+      id="close-modal"
+      class="absolute top-2 right-4 text-black text-xl font-bold"
+      >&times;</button
+    >
+    <div
+      id="modal-content"
+      class="flex flex-col items-center text-center gap-4"
+    >
+      <picture
+        class="w-full bg-gray-100 rounded-lg flex items-center justify-center"
+      >
+        <img
+          id="modal-image"
+          src=""
+          alt=""
+          class="w-48 h-48 object-contain rounded-lg"
+        />
+      </picture>
+      <h3 id="modal-title" class="text-2xl font-semibold"></h3>
+      <p id="modal-ingredients" class="text-gray-600 text-sm"></p>
+      <div class="flex items-center justify-center gap-4 mt-4">
+        <button
+          id="add-to-cart"
+          class="px-4 py-2 bg-secondary text-white rounded-xl font-medium hover:bg-secondary/90 transition"
+          >Agregar al carrito</button
+        >
+
+        <!-- Contenedor del grupo de botones e input -->
+        <div
+          class="flex items-center border border-primary rounded-xl px-4 xs:px-2 xs:py-1 py-4"
+        >
+          <button
+            id="decrease-qty"
+            class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 text-xl font-bold"
+            ><Minus width={20} /></button
+          >
+
+          <!-- Campo de entrada numérica -->
+          <input
+            id="modal-quantity"
+            type="number"
+            value="1"
+            min="1"
+            class="w-12 text-center text-xl font-medium bg-transparent focus:outline-none"
+          />
+
+          <button
+            id="increase-qty"
+            class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 text-xl font-bold"
+            ><Plus width={20} /></button
+          >
+        </div>
+      </div>
+      <div class="flex items-center justify-between w-full mt-6">
+        <button
+          id="continue-shopping"
+          class="bg-primary text-white font-medium px-4 py-2 rounded-xl hover:bg-primary/90 transition"
+          >Seguir explorando</button
+        >
+        <p id="modal-price" class="text-xl font-semibold text-gray-800">$0</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de "Tu pedido" -->
+<div
+  id="order-modal"
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden p-8"
+>
+  <div
+    class="relative bg-white rounded-xl p-6 w-full max-w-xl shadow-xl max-h-[90vh] overflow-y-auto"
+  >
+    <button
+      id="close-order-modal"
+      class="absolute top-2 right-4 text-black text-xl font-bold"
+      >&times;</button
+    >
+    <div class="flex flex-col items-center text-center gap-4">
+      <h3 class="text-2xl font-semibold">Tu Pedido</h3>
+      <div id="order-details" class="text-gray-600 text-sm w-full">
+        No hay productos en tu carrito.
+      </div>
+      <div
+        class="flex flex-col xs:flex-row items-center justify-between w-full gap-2"
+      >
+        <button
+          id="continue-shopping-order"
+          class="bg-primary text-white font-medium px-3 py-2 w-full md:w-auto rounded-xl hover:bg-primary/90 transition whitespace-nowrap"
+          >Seguir explorando</button
+        >
+
+        <button
+          id="checkout"
+          class="bg-secondary text-white font-medium px-3 py-2 w-full md:w-auto rounded-xl hover:bg-secondary/90 transition whitespace-nowrap"
+          >Finalizar compra</button
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
 <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     const sectionContent = document.getElementById("section-content");
     const links = document.querySelectorAll("[data-section]");
     const mobileOrderButton = document.getElementById("mobile-order-button");
@@ -11,184 +237,385 @@ import { House, Menu } from "@lucide/astro";
     const mobileMenu = document.getElementById("mobile-side-menu");
     const closeMenu = document.getElementById("close-menu");
 
-    // Guardamos el contenido inicial
-    const originalHomeContent = sectionContent.innerHTML;
+    // Modales
+    const modal = document.getElementById("product-modal");
+    const closeModal = document.getElementById("close-modal");
+    const modalImage = document.getElementById("modal-image");
+    const modalTitle = document.getElementById("modal-title");
+    const modalIngredients = document.getElementById("modal-ingredients");
+    const modalQuantity = document.getElementById("modal-quantity");
+    const decreaseQty = document.getElementById("decrease-qty");
+    const increaseQty = document.getElementById("increase-qty");
+    const addToCart = document.getElementById("add-to-cart");
+    const continueShopping = document.getElementById("continue-shopping");
+    const modalPrice = document.getElementById("modal-price");
 
-    const loadSection = async (section) => {
-        if (section === "home") {
-            sectionContent.innerHTML = originalHomeContent;
-            mobileOrderButton.classList.add("hidden");
-        } else {
-            try {
-                const res = await fetch(`/partials/${section}.html`);
-                const html = await res.text();
-                sectionContent.innerHTML = html;
-                mobileOrderButton.classList.remove("hidden");
-            } catch (error) {
-                sectionContent.innerHTML = "Error al cargar el contenido.";
-                console.error(error);
-            }
-        }
-    };
+    // Modal de pedido
+    const orderModal = document.getElementById("order-modal");
+    const closeOrderModal = document.getElementById("close-order-modal");
+    const desktopOrderButton = document.getElementById("desktop-order-button");
+    const mobileOrderButtonBtn = document.querySelector(
+      "#mobile-order-button button",
+    );
+    const continueShoppingOrder = document.getElementById(
+      "continue-shopping-order",
+    );
+    const checkout = document.getElementById("checkout");
+    const orderDetails = document.getElementById("order-details");
 
-    const initialSection = document.querySelector("[data-section].scale-105")
-        ? document.querySelector("[data-section].scale-105").getAttribute("data-section")
-        : "home";
+    // Carrito
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    if (initialSection === "home") {
-        mobileOrderButton.classList.add("hidden");
+    function saveCartToLocalStorage() {
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    links.forEach((link) => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
+    if (!sectionContent) {
+      console.error("No encontré el contenedor #section-content");
+      return;
+    }
 
-            links.forEach((l) =>
-                l.classList.remove("scale-105", "border", "rounded-2xl", "border-black")
-            );
+    const originalHomeContent = sectionContent.innerHTML;
 
-            link.classList.add("scale-105", "border", "rounded-2xl", "border-black");
-
-            const section = link.getAttribute("data-section");
-            loadSection(section);
-        });
-    });
-
-    // Abrir menú móvil
-    menuToggle.addEventListener("click", () => {
-        mobileMenu.classList.remove("translate-x-full");
-    });
-
-    // Cerrar menú móvil
-    closeMenu.addEventListener("click", () => {
-        mobileMenu.classList.add("translate-x-full");
-    });
-
-    // Cerrar menú móvil al hacer clic en un link
-    mobileMenu.querySelectorAll("a[data-section]").forEach((link) => {
-        link.addEventListener("click", () => {
-            mobileMenu.classList.add("translate-x-full");
-        });
-    });
-
-    // Cerrar menú móvil al hacer clic fuera del menú
-    document.addEventListener("click", (event) => {
-        // Verificar si el menú está abierto (no tiene la clase translate-x-full)
-        const isMenuOpen = !mobileMenu.classList.contains("translate-x-full");
-        
-        // Verificar si el clic fue fuera del menú y no en el botón de abrir menú
-        const clickedOutside = !mobileMenu.contains(event.target) && !menuToggle.contains(event.target);
-        
-        // Si el menú está abierto y se hizo clic fuera, cerrarlo
-        if (isMenuOpen && clickedOutside) {
-            mobileMenu.classList.add("translate-x-full");
+    async function loadSection(section) {
+      if (section === "home") {
+        sectionContent.innerHTML = originalHomeContent;
+        if (cart.length === 0) {
+          mobileOrderButton.classList.add("hidden");
         }
+        return;
+      }
+
+      try {
+        const tplRes = await fetch("/partials/cards-template.html");
+        const templateHtml = await tplRes.text();
+        sectionContent.innerHTML = templateHtml;
+
+        const dataRes = await fetch(`/data/${section}.json`);
+        if (!dataRes.ok) throw new Error(`JSON ${section}.json no encontrado`);
+        const products = await dataRes.json();
+
+        const grid = sectionContent.querySelector("article.max-w-6xl");
+        grid.innerHTML = products
+          .map(
+            (item, i) => `
+            <article class="border min-w-[300px] max-w-[300px] min-h-[375px] max-h-[375px] rounded-xl shadow-md overflow-hidden flex flex-col">
+              <picture class="h-[200px] flex items-center justify-center bg-gray-100">
+                <img src="${item.img}" alt="${item.title}" class="w-full h-full object-contain" />
+              </picture>
+              <div class="flex-1 flex flex-col justify-between px-8 py-4 text-center">
+                <h3 class="text-2xl font-semibold mb-4">${item.title}</h3>
+                <div class="flex items-center justify-between mt-4">
+                  <p class="text-xl text-gray-800 font-semibold">$${item.price}</p>
+                  <button class="view-more-btn px-6 py-1 bg-primary text-white text-lg font-medium rounded-xl hover:bg-primary/90 transition" data-index="${i}">
+                    Ver más
+                  </button>
+                </div>
+              </div>
+            </article>
+          `,
+          )
+          .join("");
+
+        mobileOrderButton.classList.remove("hidden");
+
+        sectionContent.querySelectorAll(".view-more-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const idx = parseInt(btn.dataset.index, 10);
+            const product = products[idx];
+            if (!product) return;
+
+            modalImage.src = product.img;
+            modalImage.alt = product.title;
+            modalTitle.textContent = product.title;
+            modalIngredients.textContent = product.ingredients || "";
+            modalPrice.textContent = `$${product.price}`;
+            modalQuantity.value = "1";
+
+            modal.dataset.currentProduct = JSON.stringify(product);
+            modal.classList.remove("hidden");
+          });
+        });
+      } catch (err) {
+        console.error("Error al cargar productos:", err);
+        sectionContent.innerHTML = `<p class="text-red-500 text-center">Error al cargar los productos.</p>`;
+      }
+    }
+
+    function removeItem(index, removeAll = false) {
+      if (index < 0 || index >= cart.length) return;
+
+      const productName = cart[index].title; 
+
+      if (removeAll || cart[index].quantity === 1) {
+        cart.splice(index, 1);
+      } else {
+        cart[index].quantity -= 1;
+      }
+
+      saveCartToLocalStorage();
+      updateOrderModal();
+
+      // Notificación de eliminación
+      const notification = document.createElement("div");
+      notification.classList.add(
+        "fixed",
+        "bottom-20",
+        "left-1/2",
+        "transform",
+        "-translate-x-1/2",
+        "bg-secondary",
+        "text-white",
+        "px-4",
+        "py-2",
+        "rounded-lg",
+        "shadow-lg",
+        "z-50",
+        "text-center",
+      );
+      notification.textContent = removeAll
+        ? `¡${productName} eliminado del carrito!`
+        : `Se eliminó una unidad de ${productName}`;
+
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.remove();
+      }, 2000);
+    }
+
+    function addOneItem(index) {
+      if (index < 0 || index >= cart.length) return;
+
+      cart[index].quantity += 1;
+      saveCartToLocalStorage();
+      updateOrderModal();
+    }
+
+    function updateOrderModal() {
+      if (cart.length === 0) {
+        orderDetails.innerHTML = "No hay productos en tu carrito.";
+        return;
+      }
+
+      let total = 0;
+      const html = cart
+        .map((item, index) => {
+          total += item.price * item.quantity;
+          return `
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center w-full border-b pb-2 mb-2 gap-2">
+  <div class="flex items-center w-full md:w-auto">
+    <img src="${item.img}" alt="${item.title}" class="w-12 h-12 md:w-16 md:h-16 object-contain mr-2" />
+    <div class="text-left flex-1 min-w-0">
+      <p class="font-medium text-lg lg:text-base truncate">${item.title}</p>
+      <p class="text-sm text-gray-600">Cantidad: ${item.quantity}</p>
+    </div>
+  </div>
+  
+  <div class="w-full md:w-auto flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+    <p class="hidden md:block font-semibold text-lg">$${(item.price * item.quantity).toFixed(2)}</p>
+    
+    <div class="flex justify-between md:justify-end gap-2">
+      <div class="flex items-center gap-1">
+        <button class="remove-one w-8 h-8 md:w-10 md:h-10 bg-red-100 hover:bg-red-200 text-red-600 text-sm rounded-lg flex items-center justify-center" data-index="${index}">
+          -
+          </button>
+          <button class="add-one w-8 h-8 md:w-10 md:h-10 bg-green-100 hover:bg-green-200 text-green-600 text-sm rounded-lg flex items-center justify-center" data-index="${index}">
+            +
+            </button>
+            </div>
+            <p class="md:hidden font-semibold text-lg">$${(item.price * item.quantity).toFixed(2)}</p>
+      <button class="remove-all bg-secondary hover:bg-secondary/90 text-white text-xs md:text-sm px-3 py-1 md:px-4 md:py-2 rounded-lg whitespace-nowrap" data-index="${index}">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+          `;
+        })
+        .join("");
+
+      orderDetails.innerHTML = `
+          ${html}
+          <div class="flex justify-between items-center w-full mt-4 pt-2">
+            <p class="font-bold text-xl">Total:</p>
+            <p class="font-bold text-xl">$${total.toFixed(2)}</p>
+          </div>
+        `;
+
+      document.querySelectorAll(".remove-one").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const index = parseInt(e.target.dataset.index, 10);
+          removeItem(index, false);
+        });
+      });
+
+      document.querySelectorAll(".add-one").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const index = parseInt(e.target.dataset.index, 10);
+          addOneItem(index);
+        });
+      });
+
+      document.querySelectorAll(".remove-all").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const index = parseInt(e.target.dataset.index, 10);
+          removeItem(index, true);
+        });
+      });
+    }
+
+    // Controladores de eventos actualizados
+    closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+
+    decreaseQty.addEventListener("click", () => {
+      let qty = parseInt(modalQuantity.value, 10);
+      if (qty > 1) modalQuantity.value = qty - 1;
     });
-});
+
+    increaseQty.addEventListener("click", () => {
+      let qty = parseInt(modalQuantity.value, 10);
+      modalQuantity.value = qty + 1;
+    });
+
+    addToCart.addEventListener("click", () => {
+      const product = JSON.parse(modal.dataset.currentProduct || "{}");
+      const quantity = parseInt(modalQuantity.value, 10); // Cambio clave aquí
+
+      if (product && product.title) {
+        const existingItem = cart.find((item) => item.title === product.title);
+        if (existingItem) {
+          existingItem.quantity += quantity;
+        } else {
+          cart.push({ ...product, quantity });
+        }
+
+        saveCartToLocalStorage();
+        updateOrderModal();
+
+        const productName = document.createElement("div");
+        productName.classList.add(
+          "fixed",
+          "bottom-20",
+          "left-1/2",
+          "transform",
+          "-translate-x-1/2",
+          "bg-green-800",
+          "text-white",
+          "px-4",
+          "py-2",
+          "text-center",
+          "rounded-lg",
+          "shadow-lg",
+          "z-50",
+        );
+        productName.textContent = `¡${product.title} agregado al carrito!`;
+        document.body.appendChild(productName);
+
+        setTimeout(() => {
+          productName.remove();
+        }, 2000);
+      }
+
+      modal.classList.add("hidden");
+    });
+
+    continueShopping.addEventListener("click", () =>
+      modal.classList.add("hidden"),
+    );
+
+    // Resto de controladores de eventos
+    desktopOrderButton.addEventListener("click", () => {
+      updateOrderModal();
+      orderModal.classList.remove("hidden");
+    });
+
+    mobileOrderButtonBtn.addEventListener("click", () => {
+      updateOrderModal();
+      orderModal.classList.remove("hidden");
+    });
+
+    closeOrderModal.addEventListener("click", () =>
+      orderModal.classList.add("hidden"),
+    );
+    continueShoppingOrder.addEventListener("click", () =>
+      orderModal.classList.add("hidden"),
+    );
+    checkout.addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Tu carrito está vacío");
+        return;
+      }
+      alert("¡Gracias por tu compra! Tu pedido ha sido procesado.");
+      cart = [];
+      saveCartToLocalStorage();
+      updateOrderModal();
+      orderModal.classList.add("hidden");
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.add("hidden");
+    });
+
+    orderModal.addEventListener("click", (e) => {
+      if (e.target === orderModal) orderModal.classList.add("hidden");
+    });
+
+    // Inicialización
+    const saved = localStorage.getItem("selectedSection") || "home";
+    loadSection(saved);
+
+    if (cart.length > 0) {
+      mobileOrderButton.classList.remove("hidden");
+    } else if (saved === "home") {
+      mobileOrderButton.classList.add("hidden");
+    }
+
+    document
+      .querySelector(`[data-section="${saved}"]`)
+      ?.classList.add("scale-105", "border", "rounded-2xl", "border-black");
+
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        links.forEach((l) =>
+          l.classList.remove(
+            "scale-105",
+            "border",
+            "rounded-2xl",
+            "border-black",
+          ),
+        );
+        link.classList.add(
+          "scale-105",
+          "border",
+          "rounded-2xl",
+          "border-black",
+        );
+        const sec = link.dataset.section;
+        localStorage.setItem("selectedSection", sec);
+        loadSection(sec);
+      });
+    });
+
+    // Menú móvil
+    menuToggle.addEventListener("click", () =>
+      mobileMenu.classList.remove("translate-x-full"),
+    );
+    closeMenu.addEventListener("click", () =>
+      mobileMenu.classList.add("translate-x-full"),
+    );
+    mobileMenu
+      .querySelectorAll("a[data-section]")
+      .forEach((a) =>
+        a.addEventListener("click", () =>
+          mobileMenu.classList.add("translate-x-full"),
+        ),
+      );
+    document.addEventListener("click", (e) => {
+      if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        mobileMenu.classList.add("translate-x-full");
+      }
+    });
+  });
 </script>
-
-<header class="flex flex-col md:flex-row items-center justify-between md:justify-center mt-12 md:mt-12 md:h-auto px-8">
-    <div class="flex flex-col md:flex-row justify-center items-center text-center space-y-4 md:space-y-0 md:space-x-4">
-        <!-- Menú -->
-        <div class="flex items-center bg-primary rounded-2xl shadow-md">
-            <!-- Icono -->
-            <button
-                data-section="home"
-                class="flex items-center justify-center w-12 h-12 transition transform duration-200"
-            >
-                <House class="w-6 h-6" />
-            </button>
-
-            <!-- Enlaces desktop -->
-            <nav class="hidden xs:flex space-x-4 px-4">
-                <a href="#" data-section="principales" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Principales</a>
-                <a href="#" data-section="empanadas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Empanadas</a>
-                <a href="#" data-section="tartas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Tartas</a>
-                <a href="#" data-section="bebida" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Bebida</a>
-            </nav>
-
-            <!-- Botón hamburguesa -->
-            <button id="menu-toggle" class="xs:hidden flex items-center gap-1 justify-center w-auto h-10 px-3 transition transform duration-200">
-                <span class="font-medium">MENÚ</span>
-                <Menu class="w-5 h-5" />
-            </button>
-        </div>
-    </div>
-    <!-- Botón pedido (desktop) -->
-    <button class="hidden md:block px-4 py-2 border border-gray-300 rounded-2xl shadow-md bg-white text-black font-semibold md:mt-0 mt-4 md:ml-4">
-        Tu pedido
-    </button>
-</header>
-
-<!-- Contenido dinámico -->
-<section id="section-content" class="mt-8 pb-24">
-    <h2 class="text-2xl font-medium text-center px-4">
-        Gracias por elegirnos
-        <br />
-        Acá vas a encontrar todo sobre nosotros. Elegí, pedí y disfrutá
-    </h2>
-
-    <section class="flex flex-col md:flex-row items-center justify-center gap-4 mt-8 px-8">
-        <!-- Artículo 1 -->
-        <article class="w-80 max-w-full h-62 border rounded-xl shadow-md bg-white text-center space-y-4">
-            <header>
-                <h3 class="bg-secondary py-3 text-white text-xl font-semibold rounded-xl">Medios de pago</h3>
-            </header>
-            <ul class="text-left list-disc pl-6 space-y-2 text-xl font-medium">
-                <li class="py-1">Efectivo</li>
-                <li class="py-1">Tarjeta de crédito</li>
-                <li class="py-1">Tarjeta de débito</li>
-                <li class="py-1">Transferencia bancaria</li>
-            </ul>
-        </article>
-
-        <!-- Artículo 2 -->
-        <article class="w-80 max-w-full h-62 border rounded-xl shadow-md bg-white text-center space-y-4">
-            <header>
-                <h3 class="bg-secondary py-3 text-white text-xl font-semibold rounded-xl">Horarios</h3>
-            </header>
-            <ul class="text-center space-y-2 text-xl font-medium">
-                <li class="py-1">De lunes a sábados</li>
-                <li class="py-1">11:30 a 15:00</li>
-                <li class="py-1">19:00 a 00:00</li>
-            </ul>
-        </article>
-
-        <!-- Artículo 3 -->
-        <article class="w-80 max-w-full h-62 border rounded-xl shadow-md bg-white flex flex-col text-center space-y-4">
-            <header>
-                <h3 class="bg-secondary py-3 text-white text-xl font-semibold rounded-xl">Ubicación</h3>
-            </header>
-            <ul class="text-center space-y-2 text-xl font-medium">
-                <li class="py-1">Av. alguna 123</li>
-                <li class="py-1">Calle alguna 123</li>
-            </ul>
-            <a href="https://www.google.com/maps" target="_blank" class="mt-auto mb-2 font-semibold text-sm">
-                Ver en Maps
-            </a>
-        </article>
-    </section>
-</section>
-
-<!-- Botón pedido móvil -->
-<div id="mobile-order-button" class="fixed bottom-8 w-full px-8 md:hidden">
-    <button class="py-2 border border-gray-300 rounded-xl shadow-md bg-white text-black font-semibold w-full">
-        Tu pedido
-    </button>
-</div>
-
-<!-- Panel lateral móvil -->
-<div
-    id="mobile-side-menu"
-    class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 md:hidden"
->
-    <div class="flex justify-end p-4">
-        <button id="close-menu" class="text-black font-bold text-xl">&times;</button>
-    </div>
-    <nav class="flex flex-col space-y-4 px-6">
-        <a href="#" data-section="principales" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Principales</a>
-        <a href="#" data-section="empanadas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Empanadas</a>
-        <a href="#" data-section="tartas" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Tartas</a>
-        <a href="#" data-section="bebida" class="text-base font-semibold transition transform duration-200 rounded-xl px-2 py-1">Bebida</a>
-    </nav>
-</div>
