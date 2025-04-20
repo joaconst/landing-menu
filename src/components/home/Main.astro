@@ -218,10 +218,9 @@ import { House, Menu, Minus, Plus } from "@lucide/astro";
           >Seguir explorando</button
         >
 
-        <button
-          id="checkout"
-          class="bg-secondary text-white font-medium px-3 py-2 w-full md:w-auto rounded-xl hover:bg-secondary/90 transition whitespace-nowrap"
-          >Finalizar compra</button
+        <span
+          class="text-gray-600 font-medium px-3 py-2 w-full md:w-auto rounded-xl whitespace-nowrap"
+          >Llama a un mozo</span
         >
       </div>
     </div>
@@ -260,7 +259,6 @@ import { House, Menu, Minus, Plus } from "@lucide/astro";
     const continueShoppingOrder = document.getElementById(
       "continue-shopping-order",
     );
-    const checkout = document.getElementById("checkout");
     const orderDetails = document.getElementById("order-details");
 
     // Carrito
@@ -540,18 +538,7 @@ import { House, Menu, Minus, Plus } from "@lucide/astro";
     );
     continueShoppingOrder.addEventListener("click", () =>
       orderModal.classList.add("hidden"),
-    );
-    checkout.addEventListener("click", () => {
-      if (cart.length === 0) {
-        alert("Tu carrito está vacío");
-        return;
-      }
-      alert("¡Gracias por tu compra! Tu pedido ha sido procesado.");
-      cart = [];
-      saveCartToLocalStorage();
-      updateOrderModal();
-      orderModal.classList.add("hidden");
-    });
+    );b
 
     modal.addEventListener("click", (e) => {
       if (e.target === modal) modal.classList.add("hidden");
