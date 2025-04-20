@@ -67,10 +67,58 @@ import { House, Menu, Minus, Plus } from "@lucide/astro";
 
 <!-- Contenido dinámico -->
 <section id="section-content" class="mt-8 pb-24">
-  <h2 class="text-2xl font-medium text-center px-4">
+  <h2 class="text-3xl font-medium text-center px-4">
     Gracias por elegirnos<br />Acá vas a encontrar todo sobre nosotros. Elegí,
     pedí y disfrutá
   </h2>
+
+  <section class="max-w-6xl mx-auto mt-8 flex flex-wrap justify-around gap-4 text-center">
+
+    <!-- Card 1 -->
+<article class="w-[300px] h-[300px] bg-white rounded-xl shadow-lg flex flex-col overflow-hidden border">
+  <div class="bg-secondary text-white text-center py-4">
+    <h3 class="text-xl font-semibold">Medios de pago</h3>
+  </div>
+  <div class="flex-1 flex flex-col justify-center items-center p-4 space-y-2 text-center text-xl">
+    <p>Efectivo</p>
+    <p>Transferencia</p>
+    <p>Tarjeta</p>
+  </div>
+</article>
+
+<!-- Card 2 -->
+<article class="w-[300px] h-[300px] bg-white rounded-xl shadow-lg flex flex-col overflow-hidden border">
+  <div class="bg-secondary text-white text-center py-4">
+    <h3 class="text-xl font-semibold">Horarios</h3>
+  </div>
+  <div class="flex-1 flex flex-col justify-center items-center p-4 space-y-2 text-center text-xl">
+    <p>De lunes a sábados</p>
+    <p>11:30 a 15:00</p>
+    <p>19:00 a 00:00</p>
+  </div>
+</article>
+
+<!-- Card 3 -->
+<article class="w-[300px] h-[300px] bg-white rounded-xl shadow-lg flex flex-col overflow-hidden border">
+  <div class="bg-secondary text-white text-center py-4">
+    <h3 class="text-xl font-semibold">Ubicación</h3>
+  </div>
+  <div class="flex-1 flex flex-col justify-center items-center p-4 space-y-2 text-center text-xl">
+    <div class="space-y-2">
+      <p>Av. alguna 123</p>
+      <p>Calle alguna 123</p>
+    </div>
+    <a
+      href="https://www.google.com/maps"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-4 bg-primary text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
+    >
+      Ver en Google Maps
+    </a>
+  </div>
+</article>
+  </section>
 </section>
 
 <!-- Botón pedido móvil -->
